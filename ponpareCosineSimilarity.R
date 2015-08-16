@@ -1,8 +1,10 @@
 #read in all the input data
-cpdtr <- read.csv("../input/coupon_detail_train.csv")
-cpltr <- read.csv("../input/coupon_list_train.csv")
-cplte <- read.csv("../input/coupon_list_test.csv")
-ulist <- read.csv("../input/user_list.csv")
+cpdtr <- read.csv("/Users/alvarobrandon/GitHub/AuxFiles/Ponpare Groupon/coupon_detail_train.csv")
+cpltr <- read.csv("/Users/alvarobrandon/GitHub/AuxFiles/Ponpare Groupon/coupon_list_train_translated.csv")
+cplte <- read.csv("/Users/alvarobrandon/GitHub/AuxFiles/Ponpare Groupon/coupon_list_test.csv")
+ulist <- read.csv("/Users/alvarobrandon/GitHub/AuxFiles/Ponpare Groupon/user_list.csv")
+
+
 
 #making of the train set
 train <- merge(cpdtr,cpltr)
@@ -27,7 +29,8 @@ train$DISCOUNT_PRICE <- 1/log10(train$DISCOUNT_PRICE)
 train$PRICE_RATE <- (train$PRICE_RATE*train$PRICE_RATE)/(100*100)
 #convert the factors to columns of 0's and 1's
 train <- cbind(train[,c(1,2)],model.matrix(~ -1 + .,train[,-c(1,2)],
-                                           contrasts.arg=lapply(train[,names(which(sapply(train[,-c(1,2)], is.factor)==TRUE))], contrasts, contrasts=FALSE)))
+                    contrasts.arg=lapply(train[,names(which(sapply(train[,-c(1,2)], is.factor)==TRUE))], 
+                    contrasts, contrasts=FALSE)))
 
 #separate the test from train
 test <- train[train$USER_ID_hash=="dummyuser",]

@@ -133,3 +133,5 @@ ggplot(ans,aes(x=reorder(GENRE_NAME,N) , y = N, fill=factor(PURCHASE_FLG))) +
 
 
 
+
+
